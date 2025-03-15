@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suhail Akthar - DevOps Engineer Portfolio</title>
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            background: linear-gradient(135deg, #ffffff, #e3f2fd); 
+            color: #333;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #6200ea;
+            color: white;
+        }
+        .navbar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .navbar img:hover {
+            transform: scale(1.1);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay img {
+            max-width: 50%;
+            max-height: 50%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .contact-info a {
+            color: #ffcc80;
+            text-decoration: none;
+            margin-left: 10px;
+            transition: color 0.3s ease-in-out;
+        }
+        .contact-info a:hover {
+            color: #fff;
+        }
+        header { 
+            text-align: center; 
+            padding: 2rem 0; 
+        }
+        h1 { font-size: 3rem; }
+        p { font-size: 1.2rem; }
+        section { 
+            max-width: 800px; 
+            margin: 2rem auto; 
+            padding: 2rem; 
+            background: #ffffff; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+        }
+        section:hover { 
+            transform: scale(1.03); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+        }
+        ul { list-style: none; padding: 0; }
+        li { margin: 10px 0; }
+        .highlight:hover { 
+            background-color: #6200ea; 
+            color: white; 
+            padding: 0.5rem; 
+            border-radius: 8px; 
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; 
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="website-image.jpg" alt="Suhail Akthar" onclick="openOverlay()">
+        <div class="contact-info">
+            <p>Contact me: suhailakthar18@gmail.com | <a href="https://www.linkedin.com/in/suhail-akthar-78a339271/">LinkedIn</a></p>
+        </div>
+    </div>
+    <div class="overlay" id="imageOverlay" onclick="closeOverlay()">
+        <img src="website-image.jpg" alt="Zoomed Image">
+    </div>
+    <header>
+        <h1>Suhail Akthar</h1>
+        <p>Aspiring DevOps Engineer | Cloud & Automation Enthusiast</p>
+    </header>
+    <section>
+        <h2>About Me</h2>
+        <p>I am an aspiring DevOps and Cloud Engineer with hands-on experience in real-time projects. I’ve worked with tools like AWS, Docker, Kubernetes, Jenkins, and Terraform, building and deploying scalable applications. I’m a quick learner and a team player, eager to contribute and grow in a dynamic environment. Let’s connect and collaborate.</p>
+    </section>
+    <section>
+        <h2>Skills</h2>
+        <ul>
+            <li class="highlight">Operating Systems: Windows, Linux</li>
+            <li class="highlight">Containerization: Docker, Kubernetes</li>
+            <li class="highlight">Cloud: AWS (EC2, S3, EKS, IAM)</li>
+            <li class="highlight">Infrastructure as Code: Terraform</li>
+            <li class="highlight">CI/CD: Jenkins, ArgoCD</li>
+            <li class="highlight">Monitoring: Prometheus, Grafana</li>
+            <li class="highlight">Scripting: Python, Bash</li>
+            <li class="highlight">Version Control: Git</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Projects</h2>
+        <ul>
+            <li class="highlight"><strong>Automated CI/CD Pipeline for eCommerce Microservices</strong><br>Designed and implemented a fully automated CI/CD pipeline for a microservices-based eCommerce application. Streamlined build, test, and deployment processes using Jenkins, automating Docker image creation and push. Deployed microservices on Kubernetes with YAML manifests, ensuring consistent and efficient deployments. Integrated ArgoCD for GitOps-driven deployment, enabling rapid and reliable release management. Set up real-time monitoring and alerting with Prometheus and Grafana to track performance and ensure system reliability.</li>
+            <li class="highlight"><strong>Infrastructure Automation on AWS with Terraform</strong><br>Automated AWS infrastructure provisioning using Terraform, ensuring scalability and reliability. Designed and deployed a custom VPC with subnets, security groups, and routing configurations. Configured Amazon EKS for seamless Kubernetes deployments and implemented Terraform remote backend with S3 and DynamoDB for efficient state management. Strengthened security by defining IAM roles and least-privilege access policies to control infrastructure access.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Education</h2>
+        <p>Bachelor of Engineering in Mechanical Engineering</p>
+        <p>Vidyavardhaka College of Engineering, Mysore</p>
+        <p>CGPA: 7.78 | Year of Completion: 2024</p>
+    </section>
+    <section>
+        <h2>Certifications</h2>
+        <ul>
+            <li class="highlight"><a href="https://www.udemy.com/certificate/UC-8c0b93e2-9358-435d-b57b-f1e8958f4700/" target="_blank">DevOps Beginners to Advanced with Projects - Udemy</a></li>
+            <li class="highlight"><a href="https://trainings.internshala.com/view_certificate/hw0jmhkry51/5yx4lpz7ye1/" target="_blank">Web Development - Internshala</a></li>
+        </ul>
+    </section>
+    <script>
+      function openOverlay() {
+        document.getElementById('imageOverlay').style.display = 'flex';
+      }
+
+      function closeOverlay() {
+        document.getElementById('imageOverlay').style.display = 'none';
+      }
+    </script>
+</body>
+</html>
