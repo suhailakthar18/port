@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('code Checkout') {
+            steps {
+                echo 'Checking out code...'
+                git url: 'https://github.com/suhailakthar18/port.git', branch: 'main'
+
+            }
+        }
+
+        stage('Build Docker and push Image') {
+            steps {
+                echo 'Building Docker Image...'
+                script {
+                    sh 'docker build -t suhailakthar/port-folio .'
+                    sh 'docker tag suhailakthar/port-folio suhailakthar/port-folio:${BUILD_NUMBER}'
+                    
+                withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_PASS}"
+                    sh "docker push suhailakthar/port-folio:${BUILD_NUMBER}"
+                }
+            }
+        }
+           
+            }
+        
+        stage('Scan docker image') {
+            steps {
+                echo 'Scanning docker image...'
+                script {
+                    sh 'trivy image suhailakthar/port-folio:${BUILD_NUMBER}'
+                }
+        }
+        }
+       stage('Update Deployment File') {
+    environment {
+        GIT_REPO_NAME = "port"
+        GIT_USER_NAME = "suhailakthar18"
+        GIT_BRANCH = "k8s-manifest"  // Set the correct branch name
+    }
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            sh '''
+                git config user.email "suhailakthar2002@gmail.com"
+                git config user.name "Suhail Akthar"
+                
+                # Clone the specific branch (shallow clone for efficiency)
+                git clone --single-branch --branch ${GIT_BRANCH} https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                
+                # Move into the repo directory
+                cd ${GIT_REPO_NAME}
+                
+                BUILD_NUMBER=${BUILD_NUMBER}
+                
+                # Update the image tag in deployment.yaml
+                sed -i "s|image: suhailakthar/port-folio:.*|image: suhailakthar/port-folio:${BUILD_NUMBER}|" k8s-manifest/deployment.yaml
+                
+                # Add and commit the changes
+                git add k8s-manifest/deployment.yaml
+                git commit -m "Update deployment image to version ${BUILD_NUMBER} [skip ci]"
+                
+                # Push changes to the correct branch
+                git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git ${GIT_BRANCH}
+            '''
+        }
+    }
+}
+
+
+        post {
+    success {
+      emailext subject: "Build ${currentBuild.fullDisplayName} Successful",
+        body: "Build ${currentBuild.fullDisplayName} has completed successfully.\nCheck console output at ${env.BUILD_URL}",
+        to: 'suhailakthar2002@gmail.com'
+    }
+    always {
+      emailext subject: "Build ${currentBuild.fullDisplayName} Status: ${currentBuild.currentResult}",
+        body: "Build ${currentBuild.fullDisplayName} has finished with status: ${currentBuild.currentResult}\nCheck console output at ${env.BUILD_URL}",
+        to: 'suhailakthar2002@gmail.com'
+    }
+
+    }
+}
+}
