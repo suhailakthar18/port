@@ -38,7 +38,7 @@ pipeline {
     environment {
         GIT_REPO_NAME = "port"
         GIT_USER_NAME = "suhailakthar18"
-        GIT_BRANCH = "k8s-manifest"  // Set the correct branch name
+        GIT_BRANCH = "k8s"  // Set the correct branch name
     }
     steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
@@ -55,7 +55,7 @@ pipeline {
                 BUILD_NUMBER=${BUILD_NUMBER}
                 
                 # Update the image tag in deployment.yaml
-                sed -i "s|image: suhailakthar/port-folio:.*|image: suhailakthar/port-folio:${BUILD_NUMBER}|" k8s-manifest/deployment.yaml
+                sed -i "s|image: suhailakthar/port-folio:.*|image: suhailakthar/port-folio:${BUILD_NUMBER}|"deployment.yaml
                 
                 # Add and commit the changes
                 git add k8s-manifest/deployment.yaml
