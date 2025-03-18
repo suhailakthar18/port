@@ -55,7 +55,7 @@ pipeline {
                 BUILD_NUMBER=${BUILD_NUMBER}
                 
                 # Update the image tag in deployment.yaml
-                sed -i "s|image: suhailakthar/port-folio:.*|image: suhailakthar/port-folio:${BUILD_NUMBER}|" k8s-manifest/deployment.yaml
+                sed -i "s|image: suhailakthar/port-folio:.*|image: suhailakthar/port-folio:${BUILD_NUMBER}|"deployment.yaml
                 
                 # Add and commit the changes
                 git add k8s-manifest/deployment.yaml
